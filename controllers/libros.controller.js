@@ -5,7 +5,7 @@ const obtenerTodosLosLibros = (req,res) => {
 }
 
 const obtenerLibroPorAutor = (req,res) => {
-    const resultados = [...libros];
+    let resultados = [...libros];
     const autor = req.query.autor;
 
     if(autor){
@@ -24,6 +24,9 @@ const obtenerLibroPorAutor = (req,res) => {
     
     }
 }
+
+/// CORREGIR ESTO
+
 
 module.exports = {
     obtenerTodosLosLibros,
