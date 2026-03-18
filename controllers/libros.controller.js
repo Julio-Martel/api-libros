@@ -25,9 +25,6 @@ const obtenerLibroPorAutor = (req,res) => {
     }
 }
 
-/// CORREGIR ESTO
-// CORREGIR GET
-
 module.exports = {
     obtenerTodosLosLibros,
     obtenerLibroPorAutor
