@@ -62,12 +62,38 @@ const eliminarLibro = (req,res) => {
         }
 
     }
+}
 
-    
+const modificarLibro = (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+
+    if(isNaN(codigo)){
+        return res.status(400).json({
+            mensaje: "Codigo invalido"
+        })
+    } else {
+        const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
+        
+        if(libroEncontrado !== -1){
+            libros[libroEncontrado]= {
+                codigo: codigo,
+                ...libros[libroEncontrado]
+            }
+        
+            res.status(200).json({
+                mensaje: "Libro Actualizado"
+            })
+        } else {
+            res.status(404).json({
+                mensaje: "Libro no encontrado"
+            })
+        }
+    }
 }
 
 module.exports = {
     obtenerTodosLosLibros,
     obtenerLibroPorAutor,
+    modificarLibro,
     eliminarLibro
 }
