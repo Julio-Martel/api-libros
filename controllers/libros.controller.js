@@ -24,36 +24,46 @@ const obtenerLibroPorAutor = (req,res) => {
             });
         }
     }
-    
+
     return res.json(resultados);
 }
 
 
 const eliminarLibro = (req,res) => {
 
-    const  {codigo} = req.params;
-    const codNum = parseInt(codigo);
-    const libroEncontrado = libros.findIndex(l => l.codigo === codNum);
+    const  codigo = parseInt(req.params.codigo);
+    const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
 
-    if(libroEncontrado !== -1 ){
-        console.log(libroEncontrado)
-        libros.splice(libroEncontrado, 1);
-
-        let j = 1;
-        libros.forEach(libro => {
-            libro.codigo = j;
-            j++;
-        })
-
-        return res.status(202).json({
-            mensaje:"Listado de libros actualizada",
-            libros
-        })
+    
+    if (isNaN(codigo)) {
+        return res.status(400).json({
+            mensaje: "Código inválido"
+        });
     } else {
-        return res.status(404).json({
-            mensaje: "Libro no encontrado"
-        })
+        if(libroEncontrado !== -1 ){
+            console.log(libroEncontrado)
+            libros.splice(libroEncontrado, 1);
+
+            let j = 1;
+            libros.forEach(libro => {
+                libro.codigo = j;
+                j++;
+            })
+
+            return res.status(202).json({
+                mensaje:"Listado de libros actualizada",
+                libros
+            })
+      
+        } else {
+            return res.status(404).json({
+                mensaje: "Libro no encontrado"
+            })
+        }
+
     }
+
+    
 }
 
 module.exports = {
