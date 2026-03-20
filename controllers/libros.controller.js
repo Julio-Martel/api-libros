@@ -32,14 +32,14 @@ const obtenerLibroPorAutor = (req,res) => {
 const eliminarLibro = (req,res) => {
 
     const  codigo = parseInt(req.params.codigo);
-    const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
 
-    
     if (isNaN(codigo)) {
         return res.status(400).json({
             mensaje: "Código inválido"
         });
     } else {
+        const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
+
         if(libroEncontrado !== -1 ){
             console.log(libroEncontrado)
             libros.splice(libroEncontrado, 1);
