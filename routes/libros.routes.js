@@ -3,8 +3,14 @@ const router = express.Router();
 
 const librosController = require("../controllers/libros.controller");
 
-router.get("/", librosController.obtenerTodosLosLibros);
-router.get("/:autor", librosController.obtenerLibroPorAutor);
-//router.get("/paginas/:cantidad", librosController.librosPorPaginas);
+router.get("/", librosController.obtenerLibroPorAutor);
+router.delete("/:codigo", librosController.eliminarLibro);
+router.patch("/:codigo", librosController.modificarLibro);
+
+
+router.get("/", (req,res) => {
+    console.log("ENTRO A LIBROS");
+    res.json({mensaje: "ok"});
+});
 
 module.exports = router;
