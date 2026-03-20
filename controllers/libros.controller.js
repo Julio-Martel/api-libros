@@ -24,11 +24,40 @@ const obtenerLibroPorAutor = (req,res) => {
             });
         }
     }
-
-    // 👇 IMPORTANTE: si no hay autor
+    
     return res.json(resultados);
 }
+
+
+const eliminarLibro = (req,res) => {
+
+    const  {codigo} = req.params;
+    const codNum = parseInt(codigo);
+    const libroEncontrado = libros.findIndex(l => l.codigo === codNum);
+
+    if(libroEncontrado !== -1 ){
+        console.log(libroEncontrado)
+        libros.splice(libroEncontrado, 1);
+
+        let j = 1;
+        libros.forEach(libro => {
+            libro.codigo = j;
+            j++;
+        })
+
+        return res.status(202).json({
+            mensaje:"Listado de libros actualizada",
+            libros
+        })
+    } else {
+        return res.status(404).json({
+            mensaje: "Libro no encontrado"
+        })
+    }
+}
+
 module.exports = {
     obtenerTodosLosLibros,
-    obtenerLibroPorAutor
+    obtenerLibroPorAutor,
+    eliminarLibro
 }
