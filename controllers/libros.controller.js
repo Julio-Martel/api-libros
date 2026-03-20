@@ -28,7 +28,6 @@ const obtenerLibroPorAutor = (req,res) => {
     return res.json(resultados);
 }
 
-
 const eliminarLibro = (req,res) => {
 
     const  codigo = parseInt(req.params.codigo);
@@ -130,9 +129,36 @@ const reemplazarLibro = (req,res) => {
     }   
 }
 
+const crearNuevoLibro = (req,res) => {
+    const nuevoLibro = {
+        titulo: req.body.titulo,
+        autor: req.body.autor,
+        año: req.body.año,
+        pais: req.body.pais,
+        paginas: req.body. paginas
+    }
+
+    const libroRepetido = libros.findIndex(l => l.titulo === nuevoLibro.titulo);
+
+    console.log(libroRepetido)
+
+    if(libroRepetido !== -1){
+        return res.status(400).json({
+            mensaje: "Libro con titulo repetido"
+        })
+    } else {
+        libros.push(nuevoLibro);
+        return res.status(200).json({
+            mensaje: "Libro nuevo agregado"
+        })
+
+    }
+}
+
 module.exports = {
     obtenerTodosLosLibros,
     obtenerLibroPorAutor,
+    crearNuevoLibro,
     modificarLibro,
     reemplazarLibro,
     eliminarLibro
