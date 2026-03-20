@@ -4,6 +4,7 @@ const router = express.Router();
 const librosController = require("../controllers/libros.controller");
 
 router.get("/", librosController.obtenerLibroPorAutor);
+router.post("/", librosController.crearNuevoLibro);
 router.delete("/:codigo", librosController.eliminarLibro);
 router.patch("/:codigo", librosController.modificarLibro);
 router.put("/:codigo", librosController.reemplazarLibro);
