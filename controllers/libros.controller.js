@@ -73,15 +73,26 @@ const modificarLibro = (req,res) => {
         })
     } else {
         const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
-        
+        console.log(codigo)
         if(libroEncontrado !== -1){
-            libros[libroEncontrado]= {
+           /* const libroActualizado = {
                 codigo: codigo,
-                ...libros[libroEncontrado]
+                titulo: req.body.titulo,
+                autor: req.body.autor,
+                año: parseInt(req.body.año),
+                pais: req.body.pais,
+                paginas: parseInt(req.body.paginas)
+            }*/
+
+            libros[libroEncontrado] = {
+                codigo: codigo,
+                ...libros[libroEncontrado],
+                ...req.body
             }
         
             res.status(200).json({
-                mensaje: "Libro Actualizado"
+                mensaje: "Libro Actualizado",
+                libros
             })
         } else {
             res.status(404).json({
