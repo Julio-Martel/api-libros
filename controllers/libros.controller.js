@@ -75,14 +75,6 @@ const modificarLibro = (req,res) => {
         const libroEncontrado = libros.findIndex(l => l.codigo === codigo);
         console.log(codigo)
         if(libroEncontrado !== -1){
-           /* const libroActualizado = {
-                codigo: codigo,
-                titulo: req.body.titulo,
-                autor: req.body.autor,
-                año: parseInt(req.body.año),
-                pais: req.body.pais,
-                paginas: parseInt(req.body.paginas)
-            }*/
 
             libros[libroEncontrado] = {
                 codigo: codigo,
@@ -102,9 +94,46 @@ const modificarLibro = (req,res) => {
     }
 }
 
+const reemplazarLibro = (req,res) => {
+    const codigo = parseInt(req.params.codigo);
+
+    if(isNaN(codigo)){
+        return res.status(400).json({
+            mensaje: "Codigo invalido"
+        })
+    } else {
+        const libroEncontrado = libros.findIndex(l => l.codigo === codigo); 
+        
+        if(libroEncontrado !== -1){
+            const libroActualizado = {
+                titulo: req.body.titulo,
+                autor: req.body.autor,
+                año: parseInt(req.body.año),
+                pais: req.body.pais,
+                paginas: parseInt(req.body.paginas)
+            }
+
+            libros[libroEncontrado] = {
+                codigo: codigo,
+                ...libroActualizado
+            }
+
+            return res.status(200).json({
+                mensaje: "Libro reemplazado"
+            })
+
+        } else {
+            return res.status(404).json({
+                mensaje: "Libro no encontrado"
+            })            
+        }
+    }   
+}
+
 module.exports = {
     obtenerTodosLosLibros,
     obtenerLibroPorAutor,
     modificarLibro,
+    reemplazarLibro,
     eliminarLibro
 }
